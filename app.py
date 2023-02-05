@@ -27,7 +27,7 @@ class Product(db.Model):
     self.price = price
     self.qty = qty
 
-# Product Schema
+# Product table
 class ProductSchema(ma.Schema):
   class Meta:
     fields = ('id', 'name', 'description', 'price', 'qty')
@@ -36,7 +36,7 @@ class ProductSchema(ma.Schema):
 product_schema = ProductSchema(strict=True)
 products_schema = ProductSchema(many=True, strict=True)
 
-# Create a Product
+# Create a Product table
 @app.route('/product', methods=['POST'])
 def add_product():
   name = request.json['name']
@@ -58,14 +58,14 @@ def get_products():
   result = products_schema.dump(all_products)
   return jsonify(result.data)
 
-# Get Single Products
+# Get one Products
 @app.route('/product/<id>', methods=['GET'])
 def get_product(id):
   product = Product.query.get(id)
   return product_schema.jsonify(product)
 
 
-# Update a Product
+# Update a Product info
 @app.route('/product/<id>', methods=['PUT'])
 def update_product(id):
   product = Product.query.get(id)
